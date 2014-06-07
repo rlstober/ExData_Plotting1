@@ -36,33 +36,29 @@ web site</a>:
 ## Loading the data
 
 
-
-```r
+```{r}
 ## rtead file
-household_power_consumption <- read.csv("~/GitHub/ExData_Plotting1/household_power_consumption.txt", 
-    sep = ";", stringsAsFactors = FALSE)
+household_power_consumption <- read.csv("~/GitHub/ExData_Plotting1/household_power_consumption.txt", sep=";", stringsAsFactors=FALSE)
 
 ## convert date
-household_power_consumption$Date <- as.Date(household_power_consumption$Date, 
-    "%d/%m/%Y")
+household_power_consumption$Date<-as.Date(household_power_consumption$Date,"%d/%m/%Y")
 
-## subset
-hpc <- subset(household_power_consumption, Date == "2007-02-01" | Date == "2007-02-02")
+##subset
+hpc<-subset(household_power_consumption, Date =="2007-02-01" | Date =="2007-02-02" )
 
 ## add DateTime
-hpc$DateTime <- strptime(paste(hpc$Date, hpc$Time, sep = " "), "%Y-%m-%d %H:%M:%S")
+hpc$DateTime<-strptime(paste(hpc$Date, hpc$Time, sep = " "),  "%Y-%m-%d %H:%M:%S" )
 
 ## convert numeric
-hpc$Global_active_power <- as.numeric(hpc$Global_active_power)
-hpc$Global_reactive_power <- as.numeric(hpc$Global_reactive_power)
-hpc$Voltage <- as.numeric(hpc$Voltage)
+hpc$Global_active_power<-as.numeric(hpc$Global_active_power)
+hpc$Global_reactive_power<-as.numeric(hpc$Global_reactive_power)
+hpc$Voltage<-as.numeric(hpc$Voltage)
 
-hpc$Global_intensity <- as.numeric(hpc$Global_intensity)
-hpc$Sub_metering_1 <- as.numeric(hpc$Sub_metering_1)
-hpc$Sub_metering_2 <- as.numeric(hpc$Sub_metering_2)
-hpc$Sub_metering_3 <- as.numeric(hpc$Sub_metering_3)
+hpc$Global_intensity<-as.numeric(hpc$Global_intensity)
+hpc$Sub_metering_1<-as.numeric(hpc$Sub_metering_1)
+hpc$Sub_metering_2<-as.numeric(hpc$Sub_metering_2)
+hpc$Sub_metering_3<-as.numeric(hpc$Sub_metering_3)
 ```
-
 
 
 
@@ -126,54 +122,31 @@ The four plots that you will need to construct are shown below.
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
+```{r}
+##show plot
+hist(hpc$Global_active_power,col="red",main = "Global Active Power", xlab="Global Active Power (kilowatts)")
 
-```r
-## show plot
-hist(hpc$Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
-```
-
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
-
-```r
-
-## write to file
-png(filename = "plot1.png")
-hist(hpc$Global_active_power, col = "red", main = "Global Active Power", xlab = "Global Active Power (kilowatts)")
+##write to file
+png(filename="plot1.png")
+hist(hpc$Global_active_power,col="red",main = "Global Active Power", xlab="Global Active Power (kilowatts)")
 dev.off()
-```
 
 ```
-## pdf 
-##   2
-```
-
 
 
 ### Plot 2
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
+```{r}
+##show plot
+plot(x=hpc$DateTime, hpc$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
 
-```r
-## show plot
-plot(x = hpc$DateTime, hpc$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
-```
-
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
-
-```r
-
-## write to file
-png(filename = "plot2.png")
-plot(x = hpc$DateTime, hpc$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
+##write to file
+png(filename="plot2.png")
+plot(x=hpc$DateTime, hpc$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
 dev.off()
 ```
-
-```
-## pdf 
-##   2
-```
-
 
 
 ### Plot 3
@@ -181,88 +154,57 @@ dev.off()
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 
-
-```r
-## show plot
-plot(x = hpc$DateTime, hpc$Sub_metering_1, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
-lines(x = hpc$DateTime, hpc$Sub_metering_1, col = "black")
-lines(x = hpc$DateTime, hpc$Sub_metering_2, col = "red")
-lines(x = hpc$DateTime, hpc$Sub_metering_3, col = "blue")
-legend("topright", col = c("black", "red", "blue"), legend = c("Sub_metering_1", 
-    "Sub_metering_2", "Sub_metering_3"), pch = "_")
-```
-
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
-
-```r
+```{r}
+##show plot
+plot(x=hpc$DateTime, hpc$Sub_metering_1, type="n", xlab="", ylab="Global Active Power (kilowatts)")
+lines(x=hpc$DateTime, hpc$Sub_metering_1, col="black")
+lines(x=hpc$DateTime, hpc$Sub_metering_2, col="red")
+lines(x=hpc$DateTime, hpc$Sub_metering_3, col="blue")
+legend("topright", col=c("black", "red", "blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), pch="_")
 
 
-## write to file
-png(filename = "plot3.png")
-plot(x = hpc$DateTime, hpc$Sub_metering_1, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
-lines(x = hpc$DateTime, hpc$Sub_metering_1, col = "black")
-lines(x = hpc$DateTime, hpc$Sub_metering_2, col = "red")
-lines(x = hpc$DateTime, hpc$Sub_metering_3, col = "blue")
-legend("topright", col = c("black", "red", "blue"), legend = c("Sub_metering_1", 
-    "Sub_metering_2", "Sub_metering_3"), pch = "_")
+##write to file
+png(filename="plot3.png")
+plot(x=hpc$DateTime, hpc$Sub_metering_1, type="n", xlab="", ylab="Global Active Power (kilowatts)")
+lines(x=hpc$DateTime, hpc$Sub_metering_1, col="black")
+lines(x=hpc$DateTime, hpc$Sub_metering_2, col="red")
+lines(x=hpc$DateTime, hpc$Sub_metering_3, col="blue")
+legend("topright", col=c("black", "red", "blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), pch="_")
 
 dev.off()
 ```
-
-```
-## pdf 
-##   2
-```
-
 
 
 ### Plot 4
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 
+```{r}
+par(mfrow=c(2,2))
+plot(x=hpc$DateTime, hpc$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+plot(x=hpc$DateTime, hpc$Voltage, type="l", xlab="datetime", ylab="Global Active Power (kilowatts)")
+plot(x=hpc$DateTime, hpc$Sub_metering_1, type="n", xlab="", ylab="Global Active Power (kilowatts)")
+lines(x=hpc$DateTime, hpc$Sub_metering_1, col="black")
+lines(x=hpc$DateTime, hpc$Sub_metering_2, col="red")
+lines(x=hpc$DateTime, hpc$Sub_metering_3, col="blue")
+legend("topright", col=c("black", "red", "blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), pch="_")
+plot(x=hpc$DateTime, hpc$Global_reactive_power, type="l", xlab="datetime", ylab="Global_reactive_power (kilowatts)")
 
-```r
-par(mfrow = c(2, 2))
-plot(x = hpc$DateTime, hpc$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
-plot(x = hpc$DateTime, hpc$Voltage, type = "l", xlab = "datetime", ylab = "Global Active Power (kilowatts)")
-plot(x = hpc$DateTime, hpc$Sub_metering_1, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
-lines(x = hpc$DateTime, hpc$Sub_metering_1, col = "black")
-lines(x = hpc$DateTime, hpc$Sub_metering_2, col = "red")
-lines(x = hpc$DateTime, hpc$Sub_metering_3, col = "blue")
-legend("topright", col = c("black", "red", "blue"), legend = c("Sub_metering_1", 
-    "Sub_metering_2", "Sub_metering_3"), pch = "_")
-plot(x = hpc$DateTime, hpc$Global_reactive_power, type = "l", xlab = "datetime", 
-    ylab = "Global_reactive_power (kilowatts)")
-```
-
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
-
-```r
-
-## write to file
-png(filename = "plot4.png")
-par(mfrow = c(2, 2))
-plot(x = hpc$DateTime, hpc$Global_active_power, type = "l", xlab = "", ylab = "Global Active Power (kilowatts)")
-plot(x = hpc$DateTime, hpc$Voltage, type = "l", xlab = "datetime", ylab = "Global Active Power (kilowatts)")
-plot(x = hpc$DateTime, hpc$Sub_metering_1, type = "n", xlab = "", ylab = "Global Active Power (kilowatts)")
-lines(x = hpc$DateTime, hpc$Sub_metering_1, col = "black")
-lines(x = hpc$DateTime, hpc$Sub_metering_2, col = "red")
-lines(x = hpc$DateTime, hpc$Sub_metering_3, col = "blue")
-legend("topright", col = c("black", "red", "blue"), legend = c("Sub_metering_1", 
-    "Sub_metering_2", "Sub_metering_3"), pch = "_")
-plot(x = hpc$DateTime, hpc$Global_reactive_power, type = "l", xlab = "datetime", 
-    ylab = "Global_reactive_power (kilowatts)")
+##write to file
+png(filename="plot4.png")
+par(mfrow=c(2,2))
+plot(x=hpc$DateTime, hpc$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+plot(x=hpc$DateTime, hpc$Voltage, type="l", xlab="datetime", ylab="Global Active Power (kilowatts)")
+plot(x=hpc$DateTime, hpc$Sub_metering_1, type="n", xlab="", ylab="Global Active Power (kilowatts)")
+lines(x=hpc$DateTime, hpc$Sub_metering_1, col="black")
+lines(x=hpc$DateTime, hpc$Sub_metering_2, col="red")
+lines(x=hpc$DateTime, hpc$Sub_metering_3, col="blue")
+legend("topright", col=c("black", "red", "blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"), pch="_")
+plot(x=hpc$DateTime, hpc$Global_reactive_power, type="l", xlab="datetime", ylab="Global_reactive_power (kilowatts)")
 
 dev.off()
-```
+
+
 
 ```
-## pdf 
-##   2
-```
-
-```r
-
-```
-
 
